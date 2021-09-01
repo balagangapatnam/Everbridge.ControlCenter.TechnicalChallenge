@@ -2,5 +2,6 @@
     id: string,
     label: string,
     isOpen: boolean,
-    isLocked: boolean
+    isLocked: boolean,
+    retrieveDoorsHandler: Function
 }

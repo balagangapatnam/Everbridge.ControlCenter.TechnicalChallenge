@@ -61,9 +61,20 @@ export const DoorList = () => {
             });
     };
 
-    const refreshList = () => {
-        retrieveDoors();
-    };
+    const addDoor = () => {
+        DoorService.create({
+            id: "",
+            label: "Temp. Label",
+            isOpen: false,
+            isLocked: false,
+            retrieveDoorsHandler: retrieveDoors
+        }).then(response => {
+            retrieveDoors();
+            console.log(response.data);
+        }).catch(e => {
+                console.log(e);
+        });
+    }
 
     return (
         <div>
@@ -74,6 +85,7 @@ export const DoorList = () => {
                         <th scope="col">Label</th>
                         <th scope="col">Open</th>
                         <th scope="col">Locked</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,11 +93,12 @@ export const DoorList = () => {
                         doors.length === 0
                             ? <tr><th>There are no doors in the database.</th></tr>
                             : doors.map((door) => {
-                                return <Door key={door.id} id={door.id} label={door.label} isOpen={door.isOpen} isLocked={door.isLocked} />;
+                                return <Door key={door.id} id={door.id} label={door.label} isOpen={door.isOpen} isLocked={door.isLocked} retrieveDoorsHandler={retrieveDoors} />;
                             })
                     }
                 </tbody>
             </table>
+            <button type="button" onClick={addDoor}>Add Door</button>
         </div>
     );
 }
