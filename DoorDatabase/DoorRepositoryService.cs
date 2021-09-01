@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Everbridge.ControlCenter.TechnicalChallenge.DoorDatabase
 {
-    public class DoorRepositoryService
+    public class DoorRepositoryService : IDoorRepositoryService
     {
         private readonly DoorRepositoryDatabaseContext _userRepositoryDatabaseContext;
 
@@ -15,13 +16,19 @@ namespace Everbridge.ControlCenter.TechnicalChallenge.DoorDatabase
 
         public async Task<List<string>> GetDoorsIds()
         {
-            return _userRepositoryDatabaseContext.Doors.Select(x => x.Id).ToList();
+            if (_userRepositoryDatabaseContext.Doors.Any())
+            {
+                return await _userRepositoryDatabaseContext.Doors.Select(x => x.Id).ToListAsync();
+            }
+
+            return new List<string>();
         }
 
-        public async Task<DoorRecordDto> GetDoor(string doorId)
+        public async Task<DoorRecordDto?> GetDoor(string doorId)
         {
-            var user = await _userRepositoryDatabaseContext.Doors.FindAsync(doorId);
-            return (user != null) ? new DoorRecordDto(user) : null;
+            DoorRecord? doorRecord = await _userRepositoryDatabaseContext.Doors.FindAsync(doorId);
+
+            return doorRecord == null ? null : new DoorRecordDto(doorRecord);
         }
 
         public async Task<DoorRecordDto> AddDoor(DoorRecordDto door)
@@ -37,18 +44,39 @@ namespace Everbridge.ControlCenter.TechnicalChallenge.DoorDatabase
             return new DoorRecordDto(record);
         }
 
-        public async Task<DoorRecordDto> RemoveDoor(string doorId)
+        public async Task<DoorRecordDto?> RemoveDoor(string doorId)
         {
             var record = await _userRepositoryDatabaseContext.Doors.FindAsync(doorId);
+
             if (record == null)
             {
                 return null;
             }
 
             _userRepositoryDatabaseContext.Remove(record);
+
             await _userRepositoryDatabaseContext.SaveChangesAsync();
 
             return new DoorRecordDto(record);
+        }
+
+        public async Task<DoorRecordDto?> UpdateDoor(DoorRecordDto door)
+        {
+            DoorRecord? doorRecord = await _userRepositoryDatabaseContext.Doors.FindAsync(door.Id);
+
+            if(doorRecord == null)
+            {
+                return null;
+            }
+
+            doorRecord.Label = door.Label;
+            doorRecord.IsLocked = door.IsLocked;
+            doorRecord.IsOpen = door.IsOpen;
+
+            this._userRepositoryDatabaseContext.Attach(doorRecord);
+            await this._userRepositoryDatabaseContext.SaveChangesAsync();
+
+            return door;
         }
     }
 }

@@ -9,6 +9,6 @@ namespace Everbridge.ControlCenter.TechnicalChallenge.DoorDatabase
             Database.EnsureCreated();
         }
 
-        public DbSet<DoorRecord> Doors { get; set; }
+        public DbSet<DoorRecord> Doors => Set<DoorRecord>();
     }
 }

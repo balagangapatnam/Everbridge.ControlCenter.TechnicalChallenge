@@ -17,7 +17,7 @@ namespace Everbridge.ControlCenter.TechnicalChallenge.DoorDatabase
         public string Id { get; set; }
 
         [Column("Label"), MaxLength(256), Required]
-        public string Label { get; set; }
+        public string Label { get; set; } = string.Empty;
 
         [Column("IsOpen"), Required]
         public bool IsOpen { get; set; }

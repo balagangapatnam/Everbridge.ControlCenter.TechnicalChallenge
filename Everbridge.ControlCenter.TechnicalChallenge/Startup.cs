@@ -28,6 +28,8 @@ namespace Everbridge.ControlCenter.TechnicalChallenge
                 .AddNewtonsoftJson();
             services.AddDbContext<DoorRepositoryDatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DoorRepositoryDatabaseContext")));
 
+            services.AddTransient<IDoorRepositoryService, DoorRepositoryService>();
+
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
