@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup Label="Globals">
     <SccProjectName>SAK</SccProjectName>
@@ -52,6 +52,9 @@
   <ItemGroup>
     <None Remove="ClientApp\src\Components\DoorComponent.tsx" />
     <None Remove="ClientApp\src\Components\DoorListComponent.tsx" />
+    <None Remove="ClientApp\src\http-common.ts" />
+    <None Remove="ClientApp\src\services\DoorService.ts" />
+    <None Remove="ClientApp\src\types\Door.ts" />
   </ItemGroup>
 
   <ItemGroup>

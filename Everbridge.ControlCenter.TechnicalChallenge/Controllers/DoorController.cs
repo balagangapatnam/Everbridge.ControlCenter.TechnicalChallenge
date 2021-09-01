@@ -32,9 +32,9 @@ namespace Everbridge.ControlCenter.TechnicalChallenge.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<string>>> Get()
+        public async Task<ActionResult<List<DoorModel>>> Get()
         {
-            return await _doorRepositoryService.GetDoorsIds();
+            return Ok(await _doorRepositoryService.GetDoors());
         }
 
         [HttpGet]

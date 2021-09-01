@@ -14,14 +14,14 @@ namespace Everbridge.ControlCenter.TechnicalChallenge.DoorDatabase
             _userRepositoryDatabaseContext = userRepositoryDatabaseContext;
         }
 
-        public async Task<List<string>> GetDoorsIds()
+        public async Task<List<DoorRecordDto>> GetDoors()
         {
             if (_userRepositoryDatabaseContext.Doors.Any())
             {
-                return await _userRepositoryDatabaseContext.Doors.Select(x => x.Id).ToListAsync();
+                return await _userRepositoryDatabaseContext.Doors.Select(x => new DoorRecordDto(x)).ToListAsync();
             }
 
-            return new List<string>();
+            return new List<DoorRecordDto>();
         }
 
         public async Task<DoorRecordDto?> GetDoor(string doorId)
