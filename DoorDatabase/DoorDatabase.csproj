@@ -11,6 +11,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>Everbridge.ControlCenter.TechnicalChallenge.DoorDatabase</AssemblyName>
     <RootNamespace>Everbridge.ControlCenter.TechnicalChallenge.DoorDatabase</RootNamespace>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
